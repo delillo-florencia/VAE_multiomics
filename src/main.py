@@ -1,13 +1,17 @@
 from torch.utils.data import DataLoader, Dataset
-import os
-from utils.config import Config
-from utils.train import *
-from model.inference import *
-from model.multi_VAE import *
-from data_preprocess.hash_files import *
 import itertool
-from model.baseline import GeneToIsoformModel, train_baseline
-from model.baseline_VAE import BaselineVAE, train_baseline_vae
+import os
+# -----Data imports---------------
+from utils.config import Config
+from data_preprocess.hash_files import *
+# ----- Model imports ------------
+from model.multi_VAE import *
+from model.baseline import GeneToIsoformModel
+from model.baseline_VAE import BaselineVAE
+from training.train import train_model
+from training.train_baseline import train_baseline
+from training.train_baseline_VAE import train_baseline_vae
+
 def read_ids(split_txt):
     with open(split_txt) as f:
         return [line.strip() for line in f if line.strip()]
@@ -75,6 +79,7 @@ def run_experiment(config):
     print(f"Training batches: {len(train_loader)} | Validation batches: {len(val_loader)}")
 
     if config.model_type == 'baseline':
+        
         print("Initializing baseline model...", flush=True)
         model = GeneToIsoformModel(
             n_genes=config.n_genes,
@@ -86,6 +91,7 @@ def run_experiment(config):
         # Train baseline
         print("Training baseline model...", flush=True)
         train_baseline(model, train_loader, val_loader, config, device)
+        
     if config.model_type == 'baseline_vae':
         print("Initializing baseline VAE...", flush=True)
         model = BaselineVAE(config).to(device)
