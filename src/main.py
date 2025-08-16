@@ -5,8 +5,9 @@ from utils.train import *
 from model.inference import *
 from model.multi_VAE import *
 from data_preprocess.hash_files import *
-import itertools
-
+import itertool
+from model.baseline import GeneToIsoformModel, train_baseline
+from model.baseline_VAE import BaselineVAE, train_baseline_vae
 def read_ids(split_txt):
     with open(split_txt) as f:
         return [line.strip() for line in f if line.strip()]
@@ -72,14 +73,32 @@ def run_experiment(config):
     )
     
     print(f"Training batches: {len(train_loader)} | Validation batches: {len(val_loader)}")
-    
-    # Initialize model
-    print("Initializing model...",flush=True)
-    model = MultimodalVAE(config).to(device)
 
-    # Train model
-    print("Training model...",flush=True)
-    train_model(model, train_loader, val_loader, config, device)
+    if config.model_type == 'baseline':
+        print("Initializing baseline model...", flush=True)
+        model = GeneToIsoformModel(
+            n_genes=config.n_genes,
+            n_isoforms=config.n_isoforms,
+            hidden_dims=config.hidden_dims,
+            latent_dim=config.latent_dim
+        ).to(device)
+        
+        # Train baseline
+        print("Training baseline model...", flush=True)
+        train_baseline(model, train_loader, val_loader, config, device)
+    if config.model_type == 'baseline_vae':
+        print("Initializing baseline VAE...", flush=True)
+        model = BaselineVAE(config).to(device)
+        print("Training baseline VAE...", flush=True)
+        model = train_baseline_vae(model, train_loader, val_loader, config, device)
+    else:
+        print("Initializing multimodal VAE...", flush=True)
+        model = MultimodalVAE(config).to(device)
+        
+        # Train multimodal VAE
+        print("Training multimodal VAE...", flush=True)
+        train_model(model, train_loader, val_loader, config, device)    
+
     
     # Save resources
     print("Saving resources...",flush=True)
@@ -101,7 +120,7 @@ def main():
     betas = [0.01]
     gammas = [0.6]
     loss_types = ["mse", "gaussian"]
-    joint_flags = [True]  
+    joint_flags = [False]  
 
     # All combinations
     combinations = list(itertools.product(latent_dims,batch_sizes, hidden_dims_list, betas, gammas, loss_types, joint_flags))
@@ -118,7 +137,6 @@ def main():
             beta=b,
             gamma=g,
             recon_loss_type=loss,
-            use_joint_for_isoform_prediction=joint_flag
         )
         try:
             print("Starting new combination",flush=True)
