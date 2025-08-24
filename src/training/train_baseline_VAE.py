@@ -1,17 +1,13 @@
 import torch
 import torch.optim as optim
-import numpy as np
-import json
 import torch.nn.functional as F
-import matplotlib.pyplot as plt
-import random
-from losses.loss import multimodal_loss 
-import os
-import csv
-from scipy.stats import pearsonr
-from sklearn.metrics.pairwise import cosine_similarity
+from utils.seeds import set_seed
+from metrics.metrics import calc_metrics
+
+
 
 def train_baseline_vae(model, train_loader, val_loader, config, device):
+    set_seed(config.seed)
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
     
     # Create CSV logger

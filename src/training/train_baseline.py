@@ -1,20 +1,13 @@
 import torch
 import torch.optim as optim
-import numpy as np
-import json
-import torch.nn.functional as F
-import matplotlib.pyplot as plt
-import random
-from losses.loss import multimodal_loss 
-import os
-import csv
-from scipy.stats import pearsonr
-from sklearn.metrics.pairwise import cosine_similarity
+from utils.seeds import set_seed
+from metrics.metrics import calc_metrics
 
 def train_baseline(model, train_loader, val_loader, config, device):
     """Train gene-to-isoform baseline model"""
+    set_seed(config.seed)
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
-    criterion = nn.MSELoss()
+    criterion = torch.nn.MSELoss()
     
     best_val_loss = float("inf")
     best_model_path = f"best_baseline_{config.run_name}.pt"
@@ -33,7 +26,7 @@ def train_baseline(model, train_loader, val_loader, config, device):
             bg, bi = bg.to(device), bi.to(device)
             
             optimizer.zero_grad()
-            recon_iso = model(bg)
+            recon_iso = model(bg) # decode isoforms from gene data
             loss = criterion(recon_iso, bi)
             loss.backward()
             optimizer.step()
@@ -83,21 +76,3 @@ def train_baseline(model, train_loader, val_loader, config, device):
     model.load_state_dict(torch.load(best_model_path))
     return model
 
-def calc_metrics(pred, target):
-    """Calculate correlation and cosine similarity"""
-    pred = pred.cpu().numpy()
-    target = target.cpu().numpy()
-    
-    # Flatten all samples and features
-    pred_flat = pred.reshape(-1)
-    target_flat = target.reshape(-1)
-    
-    # Pearson correlation
-    cov = np.cov(pred_flat, target_flat)
-    corr = cov[0, 1] / (np.sqrt(cov[0, 0]) * np.sqrt(cov[1, 1]) + 1e-8)
-    
-    # Cosine similarity
-    cos_sim = np.dot(pred_flat, target_flat) / (
-        np.linalg.norm(pred_flat) * np.linalg.norm(target_flat) + 1e-8)
-    
-    return corr, cos_sim
