@@ -10,18 +10,8 @@ import os
 import csv
 from scipy.stats import pearsonr
 from sklearn.metrics.pairwise import cosine_similarity
-
-
-def set_seed(seed=42):
-    """Set seed for reproducibility"""
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    np.random.seed(seed)
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-
+from utils.seeds import set_seed
+from metrics.metrics import calc
 
 def train_model(model, train_loader, val_loader, config, device):
     set_seed(config.seed)
