@@ -1,5 +1,5 @@
 from torch.utils.data import DataLoader, Dataset
-import itertool
+#import itertool
 import os
 # -----Data imports---------------
 from utils.config import Config
@@ -11,6 +11,8 @@ from model.baseline_VAE import BaselineVAE
 from training.train import train_model
 from training.train_baseline import train_baseline
 from training.train_baseline_VAE import train_baseline_vae
+from model.multi_VAE_no_joint import MultimodalVAE_NoJoint
+from training.train_no_joint import train_model_no_joint
 
 def read_ids(split_txt):
     with open(split_txt) as f:
@@ -92,12 +94,21 @@ def run_experiment(config):
         print("Training baseline model...", flush=True)
         train_baseline(model, train_loader, val_loader, config, device)
         
-    if config.model_type == 'baseline_vae':
+    elif config.model_type == 'baseline_vae':
         print("Initializing baseline VAE...", flush=True)
         model = BaselineVAE(config).to(device)
         print("Training baseline VAE...", flush=True)
         model = train_baseline_vae(model, train_loader, val_loader, config, device)
-    else:
+
+    elif config.model_type == 'multimodal_no_joint':
+        print("Initializing multimodal VAE, NO joint...", flush=True)
+        model = MultimodalVAE_NoJoint(config).to(device)
+        
+        # Train multimodal VAE without joint latent space
+        print("Training multimodal VAE without joint latent space...", flush=True)
+        model = train_model_no_joint(model, train_loader, val_loader, config, device)
+
+    elif config.model_type == 'multimodal_vae':
         print("Initializing multimodal VAE...", flush=True)
         model = MultimodalVAE(config).to(device)
         
@@ -105,7 +116,9 @@ def run_experiment(config):
         print("Training multimodal VAE...", flush=True)
         train_model(model, train_loader, val_loader, config, device)    
 
-    
+    else:
+        print("No model with that name")
+        return False
     # Save resources
     print("Saving resources...",flush=True)
     os.makedirs("model_resources", exist_ok=True)
