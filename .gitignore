@@ -1,2 +1,10 @@
 logs/*
 data/*
+model_resources/*
+src/inference/__pycache__/*
+src/data_preprocess/__pycache__/*
+src/model/__pycache__/*
+src/training/__pycache__/*
+src/losses/__pycache__/*
+src/metrics/__pycache__/*
+src/utils/__pycache__/*
