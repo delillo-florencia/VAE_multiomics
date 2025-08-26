@@ -4,6 +4,7 @@ import os
 # -----Data imports---------------
 from utils.config import Config
 from data_preprocess.hash_files import *
+from utils.datasets import *
 # ----- Model imports ------------
 from model.multi_VAE import *
 from model.baseline import GeneToIsoformModel
@@ -24,10 +25,13 @@ def run_experiment(config):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     working_dir=config.working_dir
-
+    
+    samples_train=config.samples_train
+    samples_val=config.samples_val
+    
     #Read train/val/test splits
-    train_ids = read_ids(f'{working_dir}/samples/by_study/by_study_train_samples.txt')
-    val_ids   = read_ids(f'{working_dir}/samples/by_study/by_study_val_samples.txt')
+    train_ids = read_ids(f'{working_dir}/samples/{samples_train}')
+    val_ids   = read_ids(f'{working_dir}/samples/{samples_val}')
     
     print(f"Loading {len(train_ids)} samples for training & {len(val_ids)} for validation ")
     
