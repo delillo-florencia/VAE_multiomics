@@ -130,11 +130,19 @@ Preprocessing steps used in our experiments:
 - Retain only the relevant associated genes.  
 
 To do so, you may use some of the code in the preprocess module
-To speed up loading and reduce memory usage, we recommend **hashing the gene and isoform data** using:
+To speed up loading and reduce memory usage, we recommend **hashing the gene and isoform data** . You can hash your TSV files and convert them to HDF5 using the `tsv_to_h5` method from `hash_files.py`.  
 
-```bash
- data_preprocess/hash_files.py
+```python
+# Import the method
+from data_preprocess.hash_files import tsv_to_h5
+
+# Convert the filtered isoform TSV to HDF5
+tsv_to_h5('filt_log_isoforms.tsv', 'h5/isoforms.h5')
+
 ```
+
+
+    
 This will enable you to load the data super fast and without consuming too much memory.
 
 ## 2. Create splits
