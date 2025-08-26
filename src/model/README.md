@@ -24,7 +24,7 @@ This module contains implementations of four models for joint analysis of gene a
 
 ### 1. Multimodal VAE
 
-![Model Architecture Diagram](docs/multimodal_vae.png)
+![Model Architecture Diagram](../../docs/multimodal_vae.png)
 
 **Architecture**:  
 Dual encoders + Joint latent space + Dual decoders with cross-modal pathways  
@@ -56,7 +56,7 @@ Dual encoders + Joint latent space + Dual decoders with cross-modal pathways
 
 ### 2. Baseline VAE (Unimodal)
 
-![Model Architecture Diagram](docs/baseline_vae.png)
+![Model Architecture Diagram](../../docs/baseline_vae.png)
 
 **Architecture**:  
 Single encoder + Dual decoders  
@@ -86,7 +86,7 @@ Single encoder + Dual decoders
 
 ### 3. Baseline Autoencoder (Baseline_AE)
 
-![Model Architecture Diagram](docs/baselineae.png)
+![Model Architecture Diagram](../../docs/baselineae.png)
 
 **Architecture**:  
 Simple encoder-decoder autoencoder  
@@ -115,7 +115,7 @@ Simple encoder-decoder autoencoder
 
 ### 4. Multimodal VAE without Joint Latent Space
 
-![Model Architecture Diagram](docs/multimodal_no_joint.png)
+![Model Architecture Diagram](../../docs/multimodal_no_joint.png)
 
 **Architecture**:  
 Dual encoders + Separate latent spaces + Dual decoders + Optional cross-modal reconstruction  
