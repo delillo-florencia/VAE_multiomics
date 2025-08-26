@@ -5,3 +5,5 @@ pandas
 matplotlib
 umap
 h5py
+seaborn
+scipy
