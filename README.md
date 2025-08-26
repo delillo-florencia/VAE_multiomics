@@ -1,21 +1,39 @@
 # VAE_multiomics 
 
-## Set up Miniconda 
+This project was developed for the **DTU Research Immersion 3-week course**.   
+
+The main objective was to build a flexible and efficient framework to train multimodal and baseline autoencoders, with the ultimate goal to predict isoform expression levels from gene expression data.
+ 
+
+This repository provides everything you need to **preprocess data, create splits, configure experiments, and train machine learning models** for transcriptomics and multimodal analysis.  
+
+
+Follow the steps below to prepare your data, select a model, configure hyperparameters, and launch your training!
+
+# How to train a model
+
+##  0. Set up Miniconda 
 ### Create a directory for Miniconda
+
+```bash
 mkdir -p ~/miniconda3
-
+```
 ### Download the latest Miniconda installer
+```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-
+```
 ### Run the installer in silent mode
+```bash
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-
+```
 ### Remove the installer to save space
+```bash
 rm ~/miniconda3/miniconda.sh
-
+```
 ### Activate Miniconda
+```bash
 source ~/miniconda3/bin/activate
-
+```
 ## 2. Configure Conda 
 
 To ensure Conda is correctly initialized in future terminal sessions:
@@ -66,8 +84,6 @@ Then, go to src and run:
 ```bash
 pip install e .
 ```
-
-# How to train a model
 
 ## 1. Prepare Your Data
 
