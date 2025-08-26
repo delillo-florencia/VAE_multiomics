@@ -98,9 +98,29 @@ pip install e .
 
 # How to train a model
 
-## 1. Prepare Your Data
+## 1. Prepare Your Directory & Preprocess data
 
-Ensure your dataset follows this format:  
+## Directory Structure
+
+Prepare to organize your data like this:
+
+```bash
+data/
+  ├─ h5/           # Hashed gene and isoform data files
+  ├─ samples/      # Sample metadata files
+  ├─ raw_data/     # Original raw gene and isoform data
+  └─ filtered/     # Filtered expression data after preprocessing
+```
+
+* Place your original raw datasets in _data/raw_data/
+* All the processed/filtered data should be saved in data/filtered/
+* The hashed versions that you will generate below, should be saved in data/h5/
+* The splits generated in the upcoming step 2, should be saved in data/samples as .txt files.
+
+
+This structure ensures that your scripts can locate files easily and load data efficiently
+
+## Ensure your dataset follows this format:  
 - **Rows = samples**  
 - **Columns = features**
 
