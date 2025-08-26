@@ -18,8 +18,8 @@ To install and use this repository, follow these steps:
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/delillo-florencia/VAE_multiomics.git
+cd VAE_multiomics
 ```
 
 2. **Set up Miniconda**:
