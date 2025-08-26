@@ -10,9 +10,20 @@ This repository provides everything you need to **preprocess data, create splits
 
 Follow the steps below to prepare your data, select a model, configure hyperparameters, and launch your training!
 
-# How to train a model
+# Installation
 
-##  0. Set up Miniconda 
+
+To install and use this repository, follow these steps:
+
+1. **Clone the repository**:
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+```
+
+2. **Set up Miniconda**:
+
 ### Create a directory for Miniconda
 
 ```bash
@@ -34,7 +45,7 @@ rm ~/miniconda3/miniconda.sh
 ```bash
 source ~/miniconda3/bin/activate
 ```
-## 2. Configure Conda 
+### Configure Conda 
 
 To ensure Conda is correctly initialized in future terminal sessions:
 
@@ -48,7 +59,7 @@ source ~/.bashrc
 
 ---
 
-##  Create a Python Environment
+###  Create a Python Environment
 
 To create a custom **Python 3.10** environment inside your home directory:
 
@@ -71,7 +82,7 @@ python --version
 
 ---
 
-##  4. Install Python Package Requirements
+###  Install Python Package Requirements
 
 Install dependencies with:
 
@@ -84,6 +95,8 @@ Then, go to src and run:
 ```bash
 pip install e .
 ```
+
+# How to train a model
 
 ## 1. Prepare Your Data
 
