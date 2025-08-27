@@ -145,6 +145,12 @@ tsv_to_h5('filt_log_isoforms.tsv', 'h5/isoforms.h5')
     
 This will enable you to load the data super fast and without consuming too much memory.
 
+Note that it may be useful to also save the transcript ids or gene ids. You can easily do that by running 
+
+```bash
+head -n 1 data/filtered/filt_log_isoforms.tsv > isoform_names.txt
+```
+
 ## 2. Create splits
 
 Now that your data is ready, it is time to create the train, test and validations splits. Be mindful of your splitting strategy! Incorrect splits may introduce bias, overfitting and may inflate metrics. To create splits, you can use:
