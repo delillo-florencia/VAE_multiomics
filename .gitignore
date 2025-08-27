@@ -8,3 +8,7 @@ src/training/__pycache__/*
 src/losses/__pycache__/*
 src/metrics/__pycache__/*
 src/utils/__pycache__/*
+src/utils/run_slurm.sh
+src/utils/run_inference.sh
+src/utils/run_job_small.sh
+src/utils/run_job.sh
